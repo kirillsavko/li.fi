@@ -1,0 +1,11 @@
+// Parses given CSS properties into the transition property that is used over the application.
+// Example of usage: `transition(opacity, background-color)` would be parsed into
+// `transition: ease 0.3s opacity, ease 0.3s background-color`.
+// The main reason is to have the same transition effect across the whole application
+@mixin transition($properties...) {
+  $result: ();
+  @each $property in $properties {
+    $result: append($result, ease 0.3s #{$property}, comma);
+  }
+  transition: $result;
+}

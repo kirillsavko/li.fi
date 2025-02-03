@@ -1,0 +1,51 @@
+@use '../../assets/styles/mixins';
+
+.button {
+  @include mixins.transition(opacity, background-color, border-color, color);
+  position: relative;
+  padding: 10px 16px;
+  background-color: var(--blue);
+  border-width: 1px;
+  border-color: var(--blue);
+  border-style: solid;
+  border-radius: var(--border-radius);
+  color: var(--gray-light);
+  cursor: pointer;
+
+  &:not([disabled]) {
+    &:hover {
+      background-color: var(--blue-darken);
+      border-color: var(--blue-darken);
+    }
+
+    &:active {
+      outline: solid var(--blue-darken);
+    }
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.8;
+  }
+
+  &--loading {
+    color: transparent;
+
+    .button__spinner {
+      opacity: 1;
+    }
+  }
+
+  &__spinner {
+    @include mixins.transition(opacity);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--gray-light);
+    opacity: 0;
+  }
+}
