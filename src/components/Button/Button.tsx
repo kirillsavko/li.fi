@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ButtonHTMLAttributes, FC } from 'react'
 
 import { Spinner } from '../Spinner/Spinner'
 
@@ -7,7 +7,7 @@ import './Button.scss'
 /**
  * Represents props of {@link Button}
  */
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /**
    * Indicates if the button should have a loading spinner animation that overlaps everything
    * in the button

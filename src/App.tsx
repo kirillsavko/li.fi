@@ -1,11 +1,22 @@
+import { FC, StrictMode } from 'react'
+
+import { MainView } from './views/MainView/MainView.tsx'
+import { SolanaWalletProvider } from './components/Accounts/SolanaAccount/SolanaAccount.tsx'
+import { EvmWalletProvider } from './components/Accounts/EvmAccount/EvmAccount.tsx'
+
 import './App.scss'
 
-function App() {
+/**
+ * Renders the entire application
+ */
+export const App: FC = () => {
   return (
-    <>
-      <h1>hello world</h1>
-    </>
+    <StrictMode>
+      <SolanaWalletProvider>
+        <EvmWalletProvider>
+          <MainView />
+        </EvmWalletProvider>
+      </SolanaWalletProvider>
+    </StrictMode>
   )
 }
-
-export default App
