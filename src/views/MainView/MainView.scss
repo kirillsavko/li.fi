@@ -1,14 +1,23 @@
 .main-view {
   display: flex;
   flex-direction: column;
-  height: 100%;
 
   &__account {
     flex: 1;
     padding: 10px 0;
   }
 
-  &__account + &__account {
-    border-top: 2px solid var(--blue);
+  &__accounts {
+    margin-bottom: 20px;
+
+    &-item {
+      &::before {
+        display: none;
+      }
+    }
+
+    &-item + &-item {
+      border-top: 2px solid var(--blue);
+    }
   }
 }

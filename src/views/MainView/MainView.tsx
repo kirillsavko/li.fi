@@ -3,8 +3,29 @@ import { FC } from 'react'
 import { EvmAccount } from '../../components/Accounts/EvmAccount/EvmAccount.tsx'
 import { SolanaAccount } from '../../components/Accounts/SolanaAccount/SolanaAccount.tsx'
 import { BitcoinAccount } from '../../components/Accounts/BitcoinAccount/BitcoinAccount.tsx'
+import { Tokens } from '../../components/Tokens/Tokens.tsx'
 
 import './MainView.scss'
+
+/**
+ * Renders all accounts supported by the application
+ */
+const Accounts: FC = () => {
+  // TODO: Use mapping here
+  return (
+    <ul className='main-view__accounts'>
+      <li className='main-view__accounts-item'>
+        <EvmAccount className='main-view__account'/>
+      </li>
+      <li className='main-view__accounts-item'>
+        <SolanaAccount className='main-view__account'/>
+      </li>
+      <li className='main-view__accounts-item'>
+        <BitcoinAccount className='main-view__account'/>
+      </li>
+    </ul>
+  )
+}
 
 /**
  * Renders main view of the application that includes interaction with EVM, Solana and bitcoin
@@ -12,9 +33,8 @@ import './MainView.scss'
 export const MainView: FC = () => {
   return (
     <div className='main-view'>
-      <EvmAccount className='main-view__account' />
-      <SolanaAccount className='main-view__account' />
-      <BitcoinAccount className='main-view__account' />
+      <Accounts />
+      <Tokens />
     </div>
   )
 }

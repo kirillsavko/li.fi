@@ -1,0 +1,99 @@
+@use '../../assets/styles/mixins';
+
+$timeoutBeforeHidingHeight: 6px;
+
+@keyframes widthIncreasing {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.global-errors {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  max-width: 130px;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    overflow-y: auto;
+
+    &-item {
+      column-gap: 0;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  &__item {
+    @include mixins.transition(height);
+    position: relative;
+    padding: 5px 5px 11px 5px;
+    border-radius: var(--border-radius);
+    border-color: var(--error-darken);
+    border-style: solid;
+    background-color: var(--error-lighten);
+    color: var(--gray-light);
+    word-break: break-all;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover {
+      .global-errors__item-close-icon {
+        opacity: 0.5;
+      }
+    }
+
+    &-timeout-before-hiding {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: $timeoutBeforeHidingHeight;
+      width: 100%;
+      background-color: var(--error-darken);
+      animation: widthIncreasing linear;
+    }
+
+    &-close-icon {
+      @include mixins.transition(opacity);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - $timeoutBeforeHidingHeight);
+      background-color: var(--gray-light);
+      opacity: 0;
+
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 2px;
+        height: 16px;
+        background-color: var(--dark);
+      }
+
+      &::before {
+        transform: rotate(-45deg);
+      }
+
+      &::after {
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
