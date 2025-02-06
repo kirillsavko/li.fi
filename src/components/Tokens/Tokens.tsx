@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useEffect } from 'react'
+import { CSSProperties, FC } from 'react'
 import { FixedSizeList } from 'react-window'
 import { Token, TokenAmount } from '@lifi/sdk'
 
