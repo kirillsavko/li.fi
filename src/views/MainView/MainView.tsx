@@ -3,7 +3,6 @@ import { FC } from 'react'
 import { EvmAccount } from '../../components/Accounts/EvmAccount/EvmAccount.tsx'
 import { SolanaAccount } from '../../components/Accounts/SolanaAccount/SolanaAccount.tsx'
 import { BitcoinAccount } from '../../components/Accounts/BitcoinAccount/BitcoinAccount.tsx'
-import { Tokens } from '../../components/Tokens/Tokens.tsx'
 
 import './MainView.scss'
 
@@ -34,7 +33,6 @@ export const MainView: FC = () => {
   return (
     <div className='main-view'>
       <Accounts />
-      <Tokens />
     </div>
   )
 }

@@ -4,20 +4,22 @@ import {
 } from '@solana/wallet-adapter-react';
 import { clusterApiUrl, type PublicKey } from '@solana/web3.js';
 import { FC, PropsWithChildren } from 'react';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
 
 import {
   useWalletModal,
   WalletModalProvider,
 } from '@solana/wallet-adapter-react-ui';
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets"
+import { useBalances } from '../../../store/BalancesContext.tsx'
+import { useTokens } from '../../../store/TokensContext.tsx'
 
 import { Button } from '../../Button/Button.tsx'
+import { Tokens } from '../../Tokens/Tokens.tsx'
 
+import './SolanaAccount.scss'
 import '@solana/wallet-adapter-react-ui/styles.css'
 
-const endpoint = clusterApiUrl('mainnet-beta');
-
-const wallets = [new PhantomWalletAdapter()];
+const endpoint = clusterApiUrl(WalletAdapterNetwork.Mainnet);
 
 /**
  * Represents props of {@link SolanaAccountConnected}
@@ -35,19 +37,21 @@ type SolanaAccountConnectedProps = {
 const SolanaAccountConnected: FC<SolanaAccountConnectedProps> = props => {
   const { disconnect } = useWallet();
 
-  return <>
-    <Button onClick={disconnect}>
-      Disconnect
-    </Button>
-    <p>Address: {props.publicKey.toBase58()}</p>
-  </>
+  return (
+    <div className='solana-account__row'>
+      <Button onClick={disconnect}>
+        Disconnect
+      </Button>
+      <p className='solana-account__address'>Address: {props.publicKey.toBase58()}</p>
+    </div>
+  )
 }
 
 /**
  * Via this component the user can connect their Solana account
  */
 const ConnectSolanaAccount: FC = () => {
-  const { setVisible } = useWalletModal();
+  const {setVisible} = useWalletModal();
 
   return (
     <Button onClick={() => setVisible(true)}>
@@ -62,7 +66,7 @@ const ConnectSolanaAccount: FC = () => {
 export const SolanaWalletProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect={true}>
+      <WalletProvider wallets={[]} autoConnect>
         <WalletModalProvider>
           {children}
         </WalletModalProvider>
@@ -87,11 +91,20 @@ type SolanaAccountProps = {
  */
 export const SolanaAccount: FC<SolanaAccountProps> = props => {
   const { publicKey } = useWallet();
+  const balancesHook = useBalances()
+  const tokensHook = useTokens()
 
   return (
     <section className={props.className || ''}>
-      <h2>Solana</h2>
-      {publicKey ? <SolanaAccountConnected publicKey={publicKey} /> : <ConnectSolanaAccount />}
+      <div className='solana-account__container'>
+        <h2>Solana</h2>
+        {publicKey ? <SolanaAccountConnected publicKey={publicKey} /> : <ConnectSolanaAccount />}
+      </div>
+      <Tokens
+        balances={balancesHook.solanaBalances} fetchingBalances={balancesHook.fetchingSolanaBalances}
+        tokens={tokensHook.solanaTokens} fetchingTokens={tokensHook.fetchingSolanaTokens}
+        title='Tokens' address={publicKey?.toString()}
+      />
     </section>
   );
 }

@@ -1,24 +1,29 @@
-import { createContext, FC, PropsWithChildren, useContext, useState } from 'react'
+import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from 'react'
+import { ChainType, getTokens, Token } from '@lifi/sdk'
 
-import { getTokens, Token } from '../api/tokens.ts'
 import { useGlobalErrors } from './GlobalErrorsContext.tsx'
+import { parseTokensFromApi } from '../services/tokens.ts'
 
 /**
  * Represents structure of the tokens context
  */
 type Context = {
   /**
-   * List of all available tokens
+   * List of all available EVM tokens
    */
-  tokens: Token[]
+  evmTokens: Token[]
   /**
-   * Fetches tokens
+   * Indicates if EVM tokens are being fetched
    */
-  fetchTokens: () => void
+  fetchingEvmTokens: boolean
   /**
-   * Indicates if tokens are being fetched
+   * List of all available Solana tokens
    */
-  fetchingTokens: boolean
+  solanaTokens: Token[]
+  /**
+   * Indicates if Solana tokens are being fetched
+   */
+  fetchingSolanaTokens: boolean
 }
 
 /**
@@ -31,26 +36,60 @@ const Context = createContext<Context | null>(null)
  */
 export const TokensProvider: FC<PropsWithChildren> = props => {
   const globalErrorsHook = useGlobalErrors()
-  const [tokens, setTokens] = useState<Token[]>([])
-  const [fetchingTokens, setFetchingTokens] = useState(false)
+  const [evmTokens, setEvmTokens] = useState<Token[]>([])
+  const [fetchingEvmTokens, setFetchingEvmTokens] = useState(false)
+  const [solanaTokens, setSolanaTokens] = useState<Token[]>([])
+  const [fetchingSolanaTokens, setFetchingSolanaTokens] = useState(false)
 
-  function fetchTokens() {
-    setFetchingTokens(true)
-    getTokens()
-      .then(setTokens)
+  const fetchEvmTokens = () => {
+    setFetchingEvmTokens(true)
+    getTokens({
+      chainTypes: [ChainType.EVM]
+    })
+      .then(tokens => {
+        const parsedTokens = parseTokensFromApi(tokens)
+        setEvmTokens(parsedTokens)
+      })
       .catch(() => {
         // Ideally, all errors from the API should be caught here and based on the response status
         // code different error messages shown, but to save some time I won't do this. I believe
         // it can be skipped so far for the test application, but for the production one it's
         // really important and shouldn't be skipped
-        globalErrorsHook.addError('Unexpected error during fetching tokens. Please refresh the page')
+        globalErrorsHook.addError('Unexpected error during fetching EVM tokens. Please refresh the page')
       })
-      .finally(() => setFetchingTokens(false))
+      .finally(() => setFetchingEvmTokens(false))
   }
+
+  const fetchSolanaTokens = () => {
+    setFetchingSolanaTokens(true)
+    getTokens({
+      chainTypes: [ChainType.SVM]
+    })
+      .then(tokens => {
+        const parsedTokens = parseTokensFromApi(tokens)
+        setSolanaTokens(parsedTokens)
+      })
+      .catch(() => {
+        // Ideally, all errors from the API should be caught here and based on the response status
+        // code different error messages shown, but to save some time I won't do this. I believe
+        // it can be skipped so far for the test application, but for the production one it's
+        // really important and shouldn't be skipped
+        globalErrorsHook.addError('Unexpected error during fetching Solana tokens. Please refresh the page')
+      })
+      .finally(() => setFetchingSolanaTokens(false))
+  }
+
+  /**
+   * Gets all necessary data once during initialization to be accessible in the entire application
+   */
+  useEffect(() => {
+    fetchEvmTokens()
+    fetchSolanaTokens()
+  }, [])
 
   return (
     <Context.Provider value={{
-      tokens, fetchTokens, fetchingTokens,
+      evmTokens, fetchingEvmTokens, solanaTokens, fetchingSolanaTokens,
     }}>
       {props.children}
     </Context.Provider>

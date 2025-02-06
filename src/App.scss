@@ -2,6 +2,7 @@
   --gray-light: #F5F5F5;
   --gray-dark: #6B7280;
   --white: #FFFFFF;
+  --white-transparent: rgba(255, 255, 255, 0.7);
   --dark: #111827;
   --blue: #2563EB;
   --blue-lighter: #a2bcf4;
@@ -24,7 +25,7 @@ body {
   // 100vh on iOS is a bit higher due the navigation bar and weird calculation of the height.
   // So, by using this we can expect the height to be really 100vh on in Safari iOS.
   height: calc(100vh - env(safe-area-inset-bottom));
-  width: 100vw;
+  max-width: 100vw;
   padding: 15px;
   background-color: var(--gray-light);
   font-size: 14px;

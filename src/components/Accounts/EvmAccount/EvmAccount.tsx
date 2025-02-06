@@ -1,27 +1,30 @@
 import { FC, Fragment, PropsWithChildren } from 'react'
 import { useAccount, useConnect, useDisconnect, useEnsName, WagmiProvider } from 'wagmi'
-import { QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { queryClient, wagmiConfig } from '../../../services/wagmi.ts'
+import { wagmiConfig } from '../../../services/wagmi.ts'
+import { useTokens } from '../../../store/TokensContext.tsx'
+import { useBalances } from '../../../store/BalancesContext.tsx'
 
 import { Button } from '../../Button/Button.tsx'
+import { Tokens } from '../../Tokens/Tokens.tsx'
 
 import './EvmAccount.scss'
+
+const queryClient = new QueryClient()
 
 /**
  * Via this component the user can see connected EVM account and can disconnect it
  */
 const EvmAccountConnected: FC = () => {
   const { address } = useAccount()
-  const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({ address })
+  const { disconnect } = useDisconnect()
 
-  return <>
-    <div className='env-account__container'>
-      <Button onClick={disconnect}>Disconnect</Button>
-    </div>
-    {address && <p>Address: {ensName || address}</p>}
-  </>
+  return <div className='evm-account__row'>
+    <Button onClick={disconnect}>Disconnect</Button>
+    {address && <p className='evm-account__address'>Address: {ensName || address}</p>}
+  </div>
 }
 
 /**
@@ -31,7 +34,7 @@ const ConnectEvmAccount: FC = () => {
   const { connectors, connect } = useConnect()
 
   return (
-    <div className='env-account__container'>
+    <div className='evm-account__row'>
       {connectors.map((connector) => <Fragment key={connector.uid}>
         <Button onClick={() => connect({ connector })}>
           {connector.name}
@@ -46,7 +49,7 @@ const ConnectEvmAccount: FC = () => {
  */
 export const EvmWalletProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
         {children}
       </QueryClientProvider>
@@ -69,12 +72,21 @@ type EvmAccountProps = {
  * Via this component the user can either connect or disconnect an EVM account
  */
 export const EvmAccount: FC<EvmAccountProps> = props => {
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
+  const balancesHook = useBalances()
+  const tokensHook = useTokens()
 
   return (
     <section className={props.className || ''}>
-      <h2>EVM</h2>
-      {isConnected ? <EvmAccountConnected /> : <ConnectEvmAccount />}
+      <div className='evm-account__container'>
+        <h2>EVM</h2>
+        {isConnected ? <EvmAccountConnected /> : <ConnectEvmAccount />}
+      </div>
+      <Tokens
+        balances={balancesHook.evmBalances} fetchingBalances={balancesHook.fetchingEvmBalances}
+        tokens={tokensHook.evmTokens} fetchingTokens={tokensHook.fetchingEvmTokens}
+        title='Tokens' address={address}
+      />
     </section>
   )
 }

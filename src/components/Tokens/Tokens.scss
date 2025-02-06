@@ -3,6 +3,29 @@
     max-width: 50px;
   }
 
+  &__wrapper {
+    position: relative;
+  }
+
+  &__fetching-balances {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    background-color: var(--white-transparent);
+    border-radius: var(--border-radius);
+
+    &-spinner {
+      max-width: 30px;
+    }
+  }
+
   &__list {
     border-width: 2px;
     border-style: solid;
@@ -14,9 +37,15 @@
       align-items: center;
       column-gap: 10px;
       padding: 0 10px;
+      min-width: 270px;
 
       &-image {
         max-width: 20px;
+      }
+
+      &-balance {
+        margin-left: auto;
+        text-align: right;
       }
     }
 
