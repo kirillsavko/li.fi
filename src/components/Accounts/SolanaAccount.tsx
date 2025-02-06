@@ -10,13 +10,13 @@ import {
   useWalletModal,
   WalletModalProvider,
 } from '@solana/wallet-adapter-react-ui';
-import { useBalances } from '../../../store/BalancesContext.tsx'
-import { useTokens } from '../../../store/TokensContext.tsx'
+import { useBalances } from '../../store/BalancesContext.tsx'
+import { useTokens } from '../../store/TokensContext.tsx'
 
-import { Button } from '../../Button/Button.tsx'
-import { Tokens } from '../../Tokens/Tokens.tsx'
+import { Button } from '../Button/Button.tsx'
+import { Tokens } from '../Tokens/Tokens.tsx'
+import { AccountAddress, AccountContainer, AccountRow } from './AccountBaseComponents/AccountBaseComponents.tsx'
 
-import './SolanaAccount.scss'
 import '@solana/wallet-adapter-react-ui/styles.css'
 
 const endpoint = clusterApiUrl(WalletAdapterNetwork.Mainnet);
@@ -38,12 +38,12 @@ const SolanaAccountConnected: FC<SolanaAccountConnectedProps> = props => {
   const { disconnect } = useWallet();
 
   return (
-    <div className='solana-account__row'>
+    <AccountRow>
       <Button onClick={disconnect}>
         Disconnect
       </Button>
-      <p className='solana-account__address'>Address: {props.publicKey.toBase58()}</p>
-    </div>
+      <AccountAddress>Address: {props.publicKey.toBase58()}</AccountAddress>
+    </AccountRow>
   )
 }
 
@@ -96,10 +96,10 @@ export const SolanaAccount: FC<SolanaAccountProps> = props => {
 
   return (
     <section className={props.className || ''}>
-      <div className='solana-account__container'>
+      <AccountContainer>
         <h2>Solana</h2>
         {publicKey ? <SolanaAccountConnected publicKey={publicKey} /> : <ConnectSolanaAccount />}
-      </div>
+      </AccountContainer>
       <Tokens
         balances={balancesHook.solanaBalances} fetchingBalances={balancesHook.fetchingSolanaBalances}
         tokens={tokensHook.solanaTokens} fetchingTokens={tokensHook.fetchingSolanaTokens}

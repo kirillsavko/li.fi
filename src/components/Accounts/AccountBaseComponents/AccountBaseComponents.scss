@@ -1,9 +1,9 @@
-.evm-account {
+.account {
   &__container {
     margin-bottom: 30px;
   }
 
-  &__row {
+  &__inline-row {
     display: flex;
     align-items: center;
     flex-wrap: wrap;

@@ -2,14 +2,13 @@ import { FC, Fragment, PropsWithChildren } from 'react'
 import { useAccount, useConnect, useDisconnect, useEnsName, WagmiProvider } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { wagmiConfig } from '../../../services/wagmi.ts'
-import { useTokens } from '../../../store/TokensContext.tsx'
-import { useBalances } from '../../../store/BalancesContext.tsx'
+import { wagmiConfig } from '../../services/wagmi.ts'
+import { useTokens } from '../../store/TokensContext.tsx'
+import { useBalances } from '../../store/BalancesContext.tsx'
 
-import { Button } from '../../Button/Button.tsx'
-import { Tokens } from '../../Tokens/Tokens.tsx'
-
-import './EvmAccount.scss'
+import { Button } from '../Button/Button.tsx'
+import { Tokens } from '../Tokens/Tokens.tsx'
+import { AccountAddress, AccountContainer, AccountRow } from './AccountBaseComponents/AccountBaseComponents.tsx'
 
 const queryClient = new QueryClient()
 
@@ -21,10 +20,10 @@ const EvmAccountConnected: FC = () => {
   const { data: ensName } = useEnsName({ address })
   const { disconnect } = useDisconnect()
 
-  return <div className='evm-account__row'>
+  return <AccountRow>
     <Button onClick={disconnect}>Disconnect</Button>
-    {address && <p className='evm-account__address'>Address: {ensName || address}</p>}
-  </div>
+    {(ensName || address) && <AccountAddress>Address: {ensName || address}</AccountAddress>}
+  </AccountRow>
 }
 
 /**
@@ -34,13 +33,13 @@ const ConnectEvmAccount: FC = () => {
   const { connectors, connect } = useConnect()
 
   return (
-    <div className='evm-account__row'>
+    <AccountRow>
       {connectors.map((connector) => <Fragment key={connector.uid}>
         <Button onClick={() => connect({ connector })}>
           {connector.name}
         </Button>
       </Fragment>)}
-    </div>
+    </AccountRow>
   )
 }
 
@@ -78,10 +77,10 @@ export const EvmAccount: FC<EvmAccountProps> = props => {
 
   return (
     <section className={props.className || ''}>
-      <div className='evm-account__container'>
+      <AccountContainer>
         <h2>EVM</h2>
         {isConnected ? <EvmAccountConnected /> : <ConnectEvmAccount />}
-      </div>
+      </AccountContainer>
       <Tokens
         balances={balancesHook.evmBalances} fetchingBalances={balancesHook.fetchingEvmBalances}
         tokens={tokensHook.evmTokens} fetchingTokens={tokensHook.fetchingEvmTokens}

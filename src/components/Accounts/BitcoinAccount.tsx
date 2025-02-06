@@ -1,10 +1,9 @@
 import { FC } from 'react'
 
-import { useBitcoinWallet } from '../../../store/BitcoinWalletContext.tsx'
+import { useBitcoinWallet } from '../../store/BitcoinWalletContext.tsx'
 
-import { Button } from '../../Button/Button.tsx'
-
-import './BitcoinAccount.scss'
+import { Button } from '../Button/Button.tsx'
+import { AccountAddress, AccountRow } from './AccountBaseComponents/AccountBaseComponents.tsx'
 
 /**
  * Via this component the user can see connected bitcoin account and can disconnect it
@@ -14,10 +13,10 @@ const BitcoinAccountConnected: FC = () => {
   const address = bitcoinHook.user.loadUserData().profile.btcAddress.p2wpkh.mainnet
 
   return (
-    <div className='bitcoin-account__row'>
+    <AccountRow>
       <Button onClick={bitcoinHook.disconnect}>Disconnect</Button>
-      {address && <p className='bitcoin-account__address'>Address: {address}</p>}
-    </div>
+      {address && <AccountAddress>Address: {address}</AccountAddress>}
+    </AccountRow>
   )
 }
 
@@ -28,7 +27,7 @@ const ConnectBitcoinAccount: FC = () => {
   const bitcoinHook = useBitcoinWallet()
 
   return (
-    <div className='bitcoin-account'>
+    <div>
       <Button onClick={bitcoinHook.connect}>Connect</Button>
     </div>
   )

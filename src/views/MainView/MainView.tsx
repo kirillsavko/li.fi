@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { EvmAccount } from '../../components/Accounts/EvmAccount/EvmAccount.tsx'
-import { SolanaAccount } from '../../components/Accounts/SolanaAccount/SolanaAccount.tsx'
-import { BitcoinAccount } from '../../components/Accounts/BitcoinAccount/BitcoinAccount.tsx'
+import { EvmAccount } from '../../components/Accounts/EvmAccount.tsx'
+import { SolanaAccount } from '../../components/Accounts/SolanaAccount.tsx'
+import { BitcoinAccount } from '../../components/Accounts/BitcoinAccount.tsx'
 
 import './MainView.scss'
 
