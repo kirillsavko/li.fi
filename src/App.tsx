@@ -9,6 +9,7 @@ import { EvmWalletProvider } from './components/Accounts/EvmAccount/EvmAccount.t
 import { GlobalErrors } from './components/GlobalErrors/GlobalErrors.tsx'
 import { GlobalErrorsProvider } from './store/GlobalErrorsContext.tsx'
 import { SdkProvider } from './components/SdkProvider/SdkProvider.tsx'
+import { BitcoinWalletProvider } from './store/BitcoinWalletContext.tsx'
 
 import './App.scss'
 
@@ -21,15 +22,17 @@ export const App: FC = () => {
     <StrictMode>
       <SolanaWalletProvider>
         <EvmWalletProvider>
-          <SdkProvider />
-          <GlobalErrorsProvider>
-            <TokensProvider>
-              <BalancesProvider>
-                <GlobalErrors />
-                <MainView />
-              </BalancesProvider>
-            </TokensProvider>
-          </GlobalErrorsProvider>
+          <BitcoinWalletProvider>
+            <SdkProvider />
+            <GlobalErrorsProvider>
+              <TokensProvider>
+                <BalancesProvider>
+                  <GlobalErrors />
+                  <MainView />
+                </BalancesProvider>
+              </TokensProvider>
+            </GlobalErrorsProvider>
+          </BitcoinWalletProvider>
       </EvmWalletProvider>
       </SolanaWalletProvider>
     </StrictMode>
