@@ -51,7 +51,7 @@ export const BitcoinAccount: FC<BitcoinAccountProps> = props => {
   const bitcoinHook = useBitcoinWallet()
 
   return (
-    <section className={props.className || ''}>
+    <section className={props.className || ''} data-testid='bitcoin-account'>
       <h2>Bitcoin</h2>
       {bitcoinHook.user.isUserSignedIn() ? <BitcoinAccountConnected /> : <ConnectBitcoinAccount />}
     </section>

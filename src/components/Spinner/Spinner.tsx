@@ -20,6 +20,6 @@ type SpinnerProps = {
  */
 export const Spinner: FC<SpinnerProps> = props => {
   return (
-    <SpinnerIcon className={`spinner ${props.className || ''}`} />
+    <SpinnerIcon className={`spinner ${props.className || ''}`} data-testid='spinner' />
   )
 }

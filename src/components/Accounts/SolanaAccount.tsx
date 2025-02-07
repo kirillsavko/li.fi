@@ -95,7 +95,7 @@ export const SolanaAccount: FC<SolanaAccountProps> = props => {
   const tokensHook = useTokens()
 
   return (
-    <section className={props.className || ''}>
+    <section className={props.className || ''} data-testid='solana-account'>
       <AccountContainer>
         <h2>Solana</h2>
         {publicKey ? <SolanaAccountConnected publicKey={publicKey} /> : <ConnectSolanaAccount />}

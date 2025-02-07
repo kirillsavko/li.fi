@@ -91,7 +91,7 @@ type TokensProps = {
  */
 export const Tokens: FC<TokensProps> = props => {
   return (
-    <section>
+    <section data-testid='tokens'>
       <h3>{props.title}</h3>
       {props.fetchingTokens
         ? <Spinner className='tokens__spinner'/>

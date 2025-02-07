@@ -31,7 +31,7 @@ const Accounts: FC = () => {
  */
 export const MainView: FC = () => {
   return (
-    <div className='main-view'>
+    <div className='main-view' data-testid='main-view'>
       <Accounts />
     </div>
   )

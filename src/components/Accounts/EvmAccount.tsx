@@ -76,7 +76,7 @@ export const EvmAccount: FC<EvmAccountProps> = props => {
   const tokensHook = useTokens()
 
   return (
-    <section className={props.className || ''}>
+    <section className={props.className || ''} data-testid='evm-account'>
       <AccountContainer>
         <h2>EVM</h2>
         {isConnected ? <EvmAccountConnected /> : <ConnectEvmAccount />}
