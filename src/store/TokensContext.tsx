@@ -29,7 +29,7 @@ type Context = {
 /**
  * Created tokens context with the initial value
  */
-const Context = createContext<Context | null>(null)
+const TokensContext = createContext<Context | null>(null)
 
 /**
  * Tokens provider that contains logic of the whole tokens store
@@ -88,11 +88,11 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
   }, [])
 
   return (
-    <Context.Provider value={{
+    <TokensContext.Provider value={{
       evmTokens, fetchingEvmTokens, solanaTokens, fetchingSolanaTokens,
     }}>
       {props.children}
-    </Context.Provider>
+    </TokensContext.Provider>
   )
 }
 
@@ -101,7 +101,7 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
  * access the store
  */
 export const useTokens = () => {
-  const context = useContext(Context)
+  const context = useContext(TokensContext)
   if (!context) {
     throw new Error('useTokens must be used within a TokensProvider')
   }

@@ -25,7 +25,7 @@ type Context = {
 /**
  * Created bitcoin wallet context with the initial value
  */
-const Context = createContext<Context | null>(null)
+const BitcoinWalletContext = createContext<Context | null>(null)
 
 /**
  * Bitcoin wallet provider that contains logic of the whole bitcoin wallet store
@@ -51,9 +51,9 @@ export const BitcoinWalletProvider: FC<PropsWithChildren> = props => {
   }
 
   return (
-    <Context.Provider value={{ user, connect, disconnect }}>
+    <BitcoinWalletContext.Provider value={{ user, connect, disconnect }}>
       {props.children}
-    </Context.Provider>
+    </BitcoinWalletContext.Provider>
   )
 }
 
@@ -62,7 +62,7 @@ export const BitcoinWalletProvider: FC<PropsWithChildren> = props => {
  * the application to access the store
  */
 export const useBitcoinWallet = () => {
-  const context = useContext(Context)
+  const context = useContext(BitcoinWalletContext)
   if (!context) {
     throw new Error('useBitcoinWallet must be used within a BitcoinWalletProvider')
   }

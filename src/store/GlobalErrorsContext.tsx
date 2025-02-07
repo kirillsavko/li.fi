@@ -39,7 +39,7 @@ type Context = {
 /**
  * Created global error context with the initial value
  */
-const Context = createContext<Context | null>(null)
+const GlobalErrorsContext = createContext<Context | null>(null)
 
 /**
  * Global error provider that contains logic of the whole global error store
@@ -59,11 +59,11 @@ export const GlobalErrorsProvider: FC<PropsWithChildren> = props => {
   }
 
   return (
-    <Context.Provider value={{
+    <GlobalErrorsContext.Provider value={{
       errors, addError, removeError,
     }}>
       {props.children}
-    </Context.Provider>
+    </GlobalErrorsContext.Provider>
   )
 }
 
@@ -72,7 +72,7 @@ export const GlobalErrorsProvider: FC<PropsWithChildren> = props => {
  * application to access the store
  */
 export const useGlobalErrors = () => {
-  const context = useContext(Context)
+  const context = useContext(GlobalErrorsContext)
   if (!context) {
     throw new Error('useGlobalErrors must be used within a GlobalErrorsProvider')
   }

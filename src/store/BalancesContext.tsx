@@ -33,7 +33,7 @@ type Context = {
 /**
  * Created balances context with the initial value
  */
-const Context = createContext<Context | null>(null)
+const BalancesContext = createContext<Context | null>(null)
 
 /**
  * Balances provider that contains logic of the whole balances store
@@ -99,11 +99,11 @@ export const BalancesProvider: FC<PropsWithChildren> = props => {
   }, [solanaAccountAddress, tokensHook.solanaTokens])
 
   return (
-    <Context.Provider value={{
+    <BalancesContext.Provider value={{
       evmBalances, fetchingEvmBalances, solanaBalances, fetchingSolanaBalances,
     }}>
       {props.children}
-    </Context.Provider>
+    </BalancesContext.Provider>
   )
 }
 
@@ -112,7 +112,7 @@ export const BalancesProvider: FC<PropsWithChildren> = props => {
  * access the store
  */
 export const useBalances = () => {
-  const context = useContext(Context)
+  const context = useContext(BalancesContext)
   if (!context) {
     throw new Error('useBalances must be used within a BalancesProvider')
   }
