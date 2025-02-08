@@ -12,9 +12,6 @@
     "test-coverage": "jest --coverage --collectCoverageFrom='src/**/*.{ts,tsx}'"
   },
   "dependencies": {
-    "@bigmi/client": "^0.1.1",
-    "@bigmi/core": "^0.1.1",
-    "@bigmi/react": "^0.1.1",
     "@lifi/sdk": "^3.5.3",
     "@lifi/wallet-management": "^3.6.1",
     "@solana/wallet-adapter-base": "^0.9.23",
