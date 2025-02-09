@@ -59,4 +59,8 @@ I didn't have any challenges here.
 
 ## Write unit tests
 I think it was the task I spent the most time on and specifically on configuring jest into the project, tests itself were written quite fast. I haven't configured jest in projects for quite a while since it's the type of task that you do only once per project in the very beginning and then just forget about that. <br />
-But it the end I managed tests work as expected in the application and covered the main logic by tests.  
+But it the end I managed tests work as expected in the application and covered the main logic by tests.
+
+## P.S.
+I want to say thank you for everyone who was involved in creating this home assignment task. I enjoyed it so much during implementation.
+The task was very interesting and not boring at all. It also made me to learn some new things which is always cool! Thanks!
