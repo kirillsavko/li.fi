@@ -14,25 +14,16 @@ import './Tokens.scss'
 
 /** Represents structure of props of {@link ListRow} which are always there regardless the token type */
 type ListRowBaseProps = {
-  /** Token the row should be rendered for */
   token: Token
-  /** Styles for the row */
   style: CSSProperties
-  /** Address balances should be rendered for. No address if user didn't connect the account */
   address: string | undefined
 }
-/** Represents props structure of {@link ListRow} for Bitcoin tokens */
 type ListRowBitcoinProps = ListRowBaseProps & {
-  /** Balance of the token if exists */
   balance: BitcoinTokenAmount | undefined
-  /** Chain type the row is rendered for */
   type: ChainType.UTXO
 }
-/** Represents props structure of {@link ListRow} for EVM or Solana tokens */
 type ListRowEvmOrSolanaProps = ListRowBaseProps & {
-  /** Balance of the token if exists */
   balance: TokenAmount | undefined
-  /** Chain type the row is rendered for */
   type: ChainType.EVM | ChainType.SVM
 }
 /** Represents props of {@link ListRow} */
@@ -110,29 +101,20 @@ const List: FC<TokensProps> = props => {
 
 /** Represents props structure of {@link Tokens} which are always there regardless the token type */
 type BaseTokensProps = {
-  /** List of all tokens that should be rendered */
   tokens: Token[]
-  /** Indicates if tokens are currently being fetched */
   fetchingTokens: boolean
-  /** Indicates if balances are currently being fetched */
   fetchingBalances: boolean
-  /** Title that is rendered before the table */
   title: string
-  /** Address balances should be rendered for. No address if user didn't connect the account */
   address: string | undefined
 }
 /** Represents props structure of {@link Tokens} for Bitcoin tokens */
 type BitcoinTokensProps = BaseTokensProps & {
-  /** List of all balances for the tokens */
   balances: BitcoinTokenAmount[]
-  /** Chain type the tokens are rendered for */
   type: ChainType.UTXO
 }
 /** Represents props structure of {@link Tokens} for EVM or Solana tokens */
 type EvmOrSolanaTokensProps = BaseTokensProps & {
-  /** List of all balances for the tokens */
   balances: TokenAmount[]
-  /** Chain type the tokens are rendered for */
   type: ChainType.EVM | ChainType.SVM
 }
 /** Represents props structure of {@link Tokens} */
