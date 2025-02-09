@@ -4,9 +4,7 @@ import { Spinner } from '../Spinner/Spinner'
 
 import './Button.scss'
 
-/**
- * Represents props of {@link Button}
- */
+/** Represents props of {@link Button} */
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /**
    * Indicates if the button should have a loading spinner animation that overlaps everything
@@ -16,9 +14,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean
 }
 
-/**
- * Button component of the project. Can be used, for example, for a click action
- */
+/** Button component of the project. Can be used, for example, for a click action */
 export const Button: FC<ButtonProps> = ({ loading, ...rest }) => {
   return (
     <button {...rest} className={`button ${loading ? 'button--loading' : ''} ${rest.className || ''}`}>

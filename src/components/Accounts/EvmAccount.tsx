@@ -13,9 +13,7 @@ import { AccountAddress, AccountContainer, AccountRow } from './AccountBaseCompo
 
 const queryClient = new QueryClient()
 
-/**
- * Via this component the user can see connected EVM account and can disconnect it
- */
+/** Via this component the user can see connected EVM account and can disconnect it */
 const EvmAccountConnected: FC = () => {
   const { address } = useAccount()
   const { data: ensName } = useEnsName({ address })
@@ -27,9 +25,7 @@ const EvmAccountConnected: FC = () => {
   </AccountRow>
 }
 
-/**
- * Via this component the user can connect their EVM account
- */
+/** Via this component the user can connect their EVM account */
 const ConnectEvmAccount: FC = () => {
   const { connectors, connect, isPending } = useConnect()
 
@@ -44,9 +40,7 @@ const ConnectEvmAccount: FC = () => {
   )
 }
 
-/**
- * EVM wallet provider. The application must be wrapped into this to interact with EVM
- */
+/** EVM wallet provider. The application must be wrapped into this to interact with EVM */
 export const EvmWalletProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>

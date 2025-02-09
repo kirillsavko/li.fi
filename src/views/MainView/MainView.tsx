@@ -6,9 +6,7 @@ import { BitcoinAccount } from '../../components/Accounts/BitcoinAccount.tsx'
 
 import './MainView.scss'
 
-/**
- * Renders all accounts supported by the application
- */
+/** Renders all accounts supported by the application */
 const Accounts: FC = () => {
   // TODO: Use mapping here
   return (
@@ -26,9 +24,7 @@ const Accounts: FC = () => {
   )
 }
 
-/**
- * Renders main view of the application that includes interaction with EVM, Solana and bitcoin
- */
+/** Renders main view of the application that includes interaction with EVM, Solana and bitcoin */
 export const MainView: FC = () => {
   return (
     <div className='main-view' data-testid='main-view'>

@@ -9,9 +9,7 @@ import { Button } from '../Button/Button.tsx'
 import { AccountAddress, AccountContainer, AccountRow } from './AccountBaseComponents/AccountBaseComponents.tsx'
 import { Tokens } from '../Tokens/Tokens.tsx'
 
-/**
- * Via this component the user can see connected bitcoin account and can disconnect it
- */
+/** Via this component the user can see connected bitcoin account and can disconnect it */
 const BitcoinAccountConnected: FC = () => {
   const bitcoinHook = useBitcoinWallet()
   const address = bitcoinHook.user.loadUserData().profile.btcAddress.p2wpkh.mainnet
@@ -27,9 +25,7 @@ const BitcoinAccountConnected: FC = () => {
   )
 }
 
-/**
- * Via this component the user can connect their bitcoin account
- */
+/** Via this component the user can connect their bitcoin account */
 const ConnectBitcoinAccount: FC = () => {
   const bitcoinHook = useBitcoinWallet()
 
@@ -43,9 +39,7 @@ const ConnectBitcoinAccount: FC = () => {
   )
 }
 
-/**
- * Represents props for {@link BitcoinAccount}
- */
+/** Represents props for {@link BitcoinAccount} */
 type BitcoinAccountProps = {
   /**
    * Class name that applies to the component
@@ -54,9 +48,7 @@ type BitcoinAccountProps = {
   className?: string
 }
 
-/**
- * Via this component the user can either connect or disconnect a bitcoin account
- */
+/** Via this component the user can either connect or disconnect a bitcoin account */
 export const BitcoinAccount: FC<BitcoinAccountProps> = props => {
   const bitcoinHook = useBitcoinWallet()
   const balancesHook = useBalances()

@@ -16,19 +16,13 @@ import '@solana/wallet-adapter-react-ui/styles.css'
 
 const endpoint = clusterApiUrl(WalletAdapterNetwork.Mainnet);
 
-/**
- * Represents props of {@link SolanaAccountConnected}
- */
+/** Represents props of {@link SolanaAccountConnected} */
 type SolanaAccountConnectedProps = {
-  /**
-   * Public key of the solana account the user connetcted
-   */
+  /** Public key of the solana account the user connected */
   publicKey: PublicKey
 }
 
-/**
- * Via this component the user can see connected Solana account and can disconnect it
- */
+/** Via this component the user can see connected Solana account and can disconnect it */
 const SolanaAccountConnected: FC<SolanaAccountConnectedProps> = props => {
   const { disconnect, disconnecting } = useWallet();
 
@@ -42,9 +36,7 @@ const SolanaAccountConnected: FC<SolanaAccountConnectedProps> = props => {
   )
 }
 
-/**
- * Via this component the user can connect their Solana account
- */
+/** Via this component the user can connect their Solana account */
 const ConnectSolanaAccount: FC = () => {
   const { setVisible, visible } = useWalletModal();
 

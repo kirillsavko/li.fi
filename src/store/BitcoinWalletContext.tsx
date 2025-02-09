@@ -3,22 +3,16 @@ import { showConnect, UserSession } from '@stacks/connect'
 
 import Placeholder from '../assets/images/placeholder.svg'
 
-/**
- * Represents structure of the bitcoin wallet context
- */
+/** Represents structure of the bitcoin wallet context */
 type Context = {
   /**
    * Currently active user's session. If the user connected the account then contains
    * user's wallet data
    */
   user: UserSession
-  /**
-   * Connects the user's bitcoin account to the application
-   */
+  /** Connects the user's bitcoin account to the application */
   connect: () => void
-  /**
-   * Disconnects the user's bitcoin account to the application
-   */
+  /** Disconnects the user's bitcoin account to the application */
   disconnect: () => void
   /** Indicates if the user is currently connecting an account */
   connecting: boolean
@@ -26,14 +20,10 @@ type Context = {
   disconnecting: boolean
 }
 
-/**
- * Created bitcoin wallet context with the initial value
- */
+/** Created bitcoin wallet context with the initial value */
 const BitcoinWalletContext = createContext<Context | null>(null)
 
-/**
- * Bitcoin wallet provider that contains logic of the whole bitcoin wallet store
- */
+/** Bitcoin wallet provider that contains logic of the whole bitcoin wallet store */
 export const BitcoinWalletProvider: FC<PropsWithChildren> = props => {
   const [user, setUser] = useState(() => new UserSession())
   const [connecting, setConnecting] = useState(false)

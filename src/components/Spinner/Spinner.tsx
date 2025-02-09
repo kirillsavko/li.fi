@@ -4,9 +4,7 @@ import SpinnerIcon from '../../assets/icons/spinner.svg?react'
 
 import './Spinner.scss'
 
-/**
- * Represents props for {@link Spinner}
- */
+/** Represents props for {@link Spinner} */
 type SpinnerProps = {
   /**
    * Class name for the component
@@ -15,9 +13,7 @@ type SpinnerProps = {
   className?: string
 }
 
-/**
- * Renders the spinner icon that infinitely rotating. The icon nested the color from the parent
- */
+/** Renders the spinner icon that infinitely rotating. The icon nested the color from the parent */
 export const Spinner: FC<SpinnerProps> = props => {
   return (
     <SpinnerIcon className={`spinner ${props.className || ''}`} data-testid='spinner' />

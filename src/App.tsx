@@ -13,9 +13,7 @@ import { BitcoinWalletProvider } from './store/BitcoinWalletContext.tsx'
 
 import './App.scss'
 
-/**
- * Renders all providers together that are required for the application
- */
+/** Renders all providers together that are required for the application */
 export const AllProviders: FC<PropsWithChildren> = props => {
   return (
     <SolanaWalletProvider>
@@ -36,9 +34,7 @@ export const AllProviders: FC<PropsWithChildren> = props => {
   )
 }
 
-/**
- * Renders the entire application
- */
+/** Renders the entire application */
 export const App: FC = () => {
   return (
     <StrictMode>

@@ -4,44 +4,26 @@ import { ChainType, getTokens, Token } from '@lifi/sdk'
 import { useGlobalErrors } from './GlobalErrorsContext.tsx'
 import { parseTokensFromApi } from '../services/tokens.ts'
 
-/**
- * Represents structure of the tokens context
- */
+/** Represents structure of the tokens context */
 type Context = {
-  /**
-   * List of all available EVM tokens
-   */
+  /** List of all available EVM tokens */
   evmTokens: Token[]
-  /**
-   * Indicates if EVM tokens are being fetched
-   */
+  /** Indicates if EVM tokens are being fetched */
   fetchingEvmTokens: boolean
-  /**
-   * List of all available Solana tokens
-   */
+  /** List of all available Solana tokens */
   solanaTokens: Token[]
-  /**
-   * Indicates if Solana tokens are being fetched
-   */
+  /** Indicates if Solana tokens are being fetched */
   fetchingSolanaTokens: boolean
-  /**
-   * List of all available Bitcoin tokens
-   */
+  /** List of all available Bitcoin tokens */
   bitcoinTokens: Token[]
-  /**
-   * Indicates if Bitcoin tokens are being fetched
-   */
+  /** Indicates if Bitcoin tokens are being fetched */
   fetchingBitcoinTokens: boolean
 }
 
-/**
- * Created tokens context with the initial value
- */
+/** Created tokens context with the initial value */
 const TokensContext = createContext<Context | null>(null)
 
-/**
- * Tokens provider that contains logic of the whole tokens store
- */
+/** Tokens provider that contains logic of the whole tokens store */
 export const TokensProvider: FC<PropsWithChildren> = props => {
   const globalErrorsHook = useGlobalErrors()
   const [evmTokens, setEvmTokens] = useState<Token[]>([])
@@ -108,9 +90,7 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
       .finally(() => setFetchingBitcoinTokens(false))
   }
 
-  /**
-   * Gets all necessary data once during initialization to be accessible in the entire application
-   */
+  /** Gets all necessary data once during initialization to be accessible in the entire application */
   useEffect(() => {
     fetchEvmTokens()
     fetchSolanaTokens()

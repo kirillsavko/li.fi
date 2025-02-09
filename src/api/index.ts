@@ -1,6 +1,4 @@
-/**
- * Error class for API requests resulting in a 4xx or 5xx status code
- */
+/** Error class for API requests resulting in a 4xx or 5xx status code */
 class ApiError extends Error {
   constructor (readonly url: string, readonly status: number) {
     super(`Erroneous request to endpoint ${url}, status ${status}`)
@@ -22,9 +20,7 @@ const errorConverter = async (res: Response): Promise<Response> => {
   return res
 }
 
-/**
- * Represents base fields that are required for all requests
- */
+/** Represents base fields that are required for all requests */
 type SendBaseRequestParams = {
   /**
    * URL the request should be sent to
@@ -32,22 +28,14 @@ type SendBaseRequestParams = {
    */
   url: string
 }
-/**
- * Represents params of sending the read request
- */
+/** Represents params of sending the read request */
 type SendReadRequestParams = SendBaseRequestParams & {
-  /**
-   * Method of the read request
-   */
+  /** Method of the read request */
   method: 'GET'
 }
-/**
- * Represents params of sending the write request, means the request can make write operations
- */
+/** Represents params of sending the write request, means the request can make write operations */
 type SendWriteRequestParams = SendBaseRequestParams & {
-  /**
-   * Method of the write request
-   */
+  /** Method of the write request */
   method: 'POST' | 'PATCH'
   /**
    * Body of the write request. The key is a string, and it can be any needed value for the API.
@@ -56,9 +44,7 @@ type SendWriteRequestParams = SendBaseRequestParams & {
    */
   body?: Record<string, unknown>
 }
-/**
- * Represents params of the request
- */
+/** Represents params of the request */
 type SendRequestParams = SendReadRequestParams | SendWriteRequestParams
 /**
  * Sends the request to the API based on the given data

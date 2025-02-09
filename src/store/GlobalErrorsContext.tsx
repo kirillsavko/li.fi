@@ -1,28 +1,20 @@
 import { nanoid } from 'nanoid'
 import { createContext, FC, PropsWithChildren, useContext, useState } from 'react'
 
-/**
- * Represents structure of the error
- */
+/** Represents structure of the error */
 export type GlobalError = {
   /**
    * Id of the error
    * @example LQiym1YGIKguNsWbFbKYQ
    */
   id: string
-  /**
-   * Text that explains why the error popped up
-   */
+  /** Text that explains why the error popped up */
   text: string
 }
 
-/**
- * Represents structure of the global error context
- */
+/** Represents structure of the global error context */
 type Context = {
-  /**
-   * List of all errors. All errors are rendered right now in {@link GlobalErrors}
-   */
+  /** List of all errors. All errors are rendered right now in {@link GlobalErrors} */
   errors: GlobalError[]
   /**
    * Adds the given error to the state
@@ -36,14 +28,10 @@ type Context = {
   removeError: (errorToRemove: GlobalError) => void
 }
 
-/**
- * Created global error context with the initial value
- */
+/** Created global error context with the initial value */
 const GlobalErrorsContext = createContext<Context | null>(null)
 
-/**
- * Global error provider that contains logic of the whole global error store
- */
+/** Global error provider that contains logic of the whole global error store */
 export const GlobalErrorsProvider: FC<PropsWithChildren> = props => {
   const [errors, setErrors] = useState<GlobalError[]>([])
 

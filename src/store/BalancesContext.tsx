@@ -8,47 +8,35 @@ import { useTokens } from './TokensContext.tsx'
 import { useBitcoinWallet } from './BitcoinWalletContext.tsx'
 import { BitcoinTokenAmount, getBitcoinBalanceByAddress } from '../api/bitcoinBalance.ts'
 
-/**
- * Represents structure of the balances context
- */
+/** Represents structure of the balances context */
 type Context = {
   /**
    * List of all EVM balances for the user's account. If account isn't connected then just
    * an empty array
    */
   evmBalances: Token[]
-  /**
-   * Indicates if EVM balances are being fetched
-   */
+  /** Indicates if EVM balances are being fetched */
   fetchingEvmBalances: boolean
   /**
    * List of all Solana balances for the user's account. If account isn't connected then just
    * an empty array
    */
   solanaBalances: Token[]
-  /**
-   * Indicates if Solana balances are being fetched
-   */
+  /** Indicates if Solana balances are being fetched */
   fetchingSolanaBalances: boolean
   /**
    * List of all Bitcoin balances for the user's account. If account isn't connected then just
    * an empty array
    */
   bitcoinBalances: BitcoinTokenAmount[]
-  /**
-   * Indicates if Bitcoin balances are being fetched
-   */
+  /** Indicates if Bitcoin balances are being fetched */
   fetchingBitcoinBalances: boolean
 }
 
-/**
- * Created balances context with the initial value
- */
+/** Created balances context with the initial value */
 const BalancesContext = createContext<Context | null>(null)
 
-/**
- * Balances provider that contains logic of the whole balances store
- */
+/** Balances provider that contains logic of the whole balances store */
 export const BalancesProvider: FC<PropsWithChildren> = props => {
   const globalErrorsHook = useGlobalErrors()
   const { publicKey: solanaAccountAddress } = useWallet();
