@@ -74,9 +74,9 @@ export const BalancesProvider: FC<PropsWithChildren> = props => {
       .catch(e => {
         // Ideally, all errors from the API should be caught here and based on the response status
         // code different error messages shown, but to save some time I won't do this. I believe
-        // it can be skipped so far for the test application, but for the production one it's
-        // really important and shouldn't be skipped
-        globalErrorsHook.addError(`Unexpected error during fetching ${chain} balances: ${e}`)
+        // just showing the error message from the API is enough for the test application
+        // but for the production one it's really important and shouldn't be skipped
+        globalErrorsHook.addError(`Error during fetching ${chain} balances: ${e.message}`)
       })
       .finally(() => setFetchingFlagFunction(false))
   }
@@ -88,7 +88,11 @@ export const BalancesProvider: FC<PropsWithChildren> = props => {
         setBitcoinBalances([token])
       })
       .catch(e => {
-        globalErrorsHook.addError(`Unexpected error during fetching bitcoin balances: ${e}`)
+        // Ideally, all errors from the API should be caught here and based on the response status
+        // code different error messages shown, but to save some time I won't do this. I believe
+        // just showing the error message from the API is enough for the test application
+        // but for the production one it's really important and shouldn't be skipped
+        globalErrorsHook.addError(`Error during fetching bitcoin balances: ${e?.message}`)
       })
       .finally(() => setFetchingBitcoinBalances(false))
   }

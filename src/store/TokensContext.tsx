@@ -42,12 +42,12 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
         const parsedTokens = parseTokensFromApi(tokens)
         setEvmTokens(parsedTokens)
       })
-      .catch(() => {
+      .catch(e => {
         // Ideally, all errors from the API should be caught here and based on the response status
         // code different error messages shown, but to save some time I won't do this. I believe
-        // it can be skipped so far for the test application, but for the production one it's
-        // really important and shouldn't be skipped
-        globalErrorsHook.addError('Unexpected error during fetching EVM tokens. Please refresh the page')
+        // just showing the error message from the API is enough for the test application
+        // but for the production one it's really important and shouldn't be skipped
+        globalErrorsHook.addError(`Error during fetching EVM tokens: ${e.message}. Please refresh the page`)
       })
       .finally(() => setFetchingEvmTokens(false))
   }
@@ -61,12 +61,12 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
         const parsedTokens = parseTokensFromApi(tokens)
         setSolanaTokens(parsedTokens)
       })
-      .catch(() => {
+      .catch(e => {
         // Ideally, all errors from the API should be caught here and based on the response status
         // code different error messages shown, but to save some time I won't do this. I believe
-        // it can be skipped so far for the test application, but for the production one it's
-        // really important and shouldn't be skipped
-        globalErrorsHook.addError('Unexpected error during fetching Solana tokens. Please refresh the page')
+        // just showing the error message from the API is enough for the test application
+        // but for the production one it's really important and shouldn't be skipped
+        globalErrorsHook.addError(`Error during fetching Solana tokens: ${e.message}. Please refresh the page`)
       })
       .finally(() => setFetchingSolanaTokens(false))
   }
@@ -80,12 +80,12 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
         const parsedTokens = parseTokensFromApi(tokens)
         setBitcoinTokens(parsedTokens)
       })
-      .catch(() => {
+      .catch(e => {
         // Ideally, all errors from the API should be caught here and based on the response status
         // code different error messages shown, but to save some time I won't do this. I believe
-        // it can be skipped so far for the test application, but for the production one it's
-        // really important and shouldn't be skipped
-        globalErrorsHook.addError('Unexpected error during fetching Bitcoin tokens. Please refresh the page')
+        // just showing the error message from the API is enough for the test application
+        // but for the production one it's really important and shouldn't be skipped
+        globalErrorsHook.addError(`Error during fetching Bitcoin tokens: ${e.message}. Please refresh the page`)
       })
       .finally(() => setFetchingBitcoinTokens(false))
   }
