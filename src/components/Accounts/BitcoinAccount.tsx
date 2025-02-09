@@ -18,7 +18,10 @@ const BitcoinAccountConnected: FC = () => {
 
   return (
     <AccountRow>
-      <Button onClick={bitcoinHook.disconnect}>Disconnect</Button>
+      <Button
+        onClick={bitcoinHook.disconnect} disabled={bitcoinHook.disconnecting}
+        loading={bitcoinHook.disconnecting}
+      >Disconnect</Button>
       {address && <AccountAddress>Address: {address}</AccountAddress>}
     </AccountRow>
   )
@@ -32,7 +35,10 @@ const ConnectBitcoinAccount: FC = () => {
 
   return (
     <div>
-      <Button onClick={bitcoinHook.connect}>Connect</Button>
+      <Button
+        onClick={bitcoinHook.connect} disabled={bitcoinHook.connecting}
+        loading={bitcoinHook.connecting
+      }>Connect</Button>
     </div>
   )
 }

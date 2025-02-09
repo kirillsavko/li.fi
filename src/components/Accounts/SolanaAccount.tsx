@@ -30,11 +30,11 @@ type SolanaAccountConnectedProps = {
  * Via this component the user can see connected Solana account and can disconnect it
  */
 const SolanaAccountConnected: FC<SolanaAccountConnectedProps> = props => {
-  const { disconnect } = useWallet();
+  const { disconnect, disconnecting } = useWallet();
 
   return (
     <AccountRow>
-      <Button onClick={disconnect}>
+      <Button onClick={disconnect} disabled={disconnecting} loading={disconnecting}>
         Disconnect
       </Button>
       <AccountAddress>Address: {props.publicKey.toBase58()}</AccountAddress>
@@ -46,10 +46,10 @@ const SolanaAccountConnected: FC<SolanaAccountConnectedProps> = props => {
  * Via this component the user can connect their Solana account
  */
 const ConnectSolanaAccount: FC = () => {
-  const {setVisible} = useWalletModal();
+  const { setVisible, visible } = useWalletModal();
 
   return (
-    <Button onClick={() => setVisible(true)}>
+    <Button onClick={() => setVisible(true)} disabled={visible} loading={visible}>
       Connect Wallet
     </Button>
   )
@@ -58,12 +58,12 @@ const ConnectSolanaAccount: FC = () => {
 /**
  * Solana wallet provider. The application must be wrapped into this to interact with Solana
  */
-export const SolanaWalletProvider: FC<PropsWithChildren> = ({ children }) => {
+export const SolanaWalletProvider: FC<PropsWithChildren> = props => {
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={[]} autoConnect>
         <WalletModalProvider>
-          {children}
+          {props.children}
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

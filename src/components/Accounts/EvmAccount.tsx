@@ -19,10 +19,10 @@ const queryClient = new QueryClient()
 const EvmAccountConnected: FC = () => {
   const { address } = useAccount()
   const { data: ensName } = useEnsName({ address })
-  const { disconnect } = useDisconnect()
+  const { disconnect, isPending } = useDisconnect()
 
   return <AccountRow>
-    <Button onClick={disconnect}>Disconnect</Button>
+    <Button onClick={disconnect} disabled={isPending} loading={isPending}>Disconnect</Button>
     {(ensName || address) && <AccountAddress>Address: {ensName || address}</AccountAddress>}
   </AccountRow>
 }
@@ -31,12 +31,12 @@ const EvmAccountConnected: FC = () => {
  * Via this component the user can connect their EVM account
  */
 const ConnectEvmAccount: FC = () => {
-  const { connectors, connect } = useConnect()
+  const { connectors, connect, isPending } = useConnect()
 
   return (
     <AccountRow>
       {connectors.map((connector) => <Fragment key={connector.uid}>
-        <Button onClick={() => connect({ connector })}>
+        <Button onClick={() => connect({ connector })} disabled={isPending} loading={isPending}>
           {connector.name}
         </Button>
       </Fragment>)}

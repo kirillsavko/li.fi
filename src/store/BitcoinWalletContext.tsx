@@ -20,6 +20,10 @@ type Context = {
    * Disconnects the user's bitcoin account to the application
    */
   disconnect: () => void
+  /** Indicates if the user is currently connecting an account */
+  connecting: boolean
+  /** Indicates if the user is currently disconnecting an account */
+  disconnecting: boolean
 }
 
 /**
@@ -32,26 +36,35 @@ const BitcoinWalletContext = createContext<Context | null>(null)
  */
 export const BitcoinWalletProvider: FC<PropsWithChildren> = props => {
   const [user, setUser] = useState(() => new UserSession())
+  const [connecting, setConnecting] = useState(false)
+  const [disconnecting, setDisconnecting] = useState(false)
 
   function connect() {
+    setConnecting(true)
     showConnect({
       appDetails: {
         name: 'Kiryl Sauko',
         icon: Placeholder as string,
       },
+      onCancel: () => {
+        setConnecting(false)
+      },
       onFinish: (payload) => {
+        setConnecting(false)
         setUser(payload.userSession)
-      }
+      },
     })
   }
 
   function disconnect() {
+    setDisconnecting(true)
     user.signUserOut()
+    setDisconnecting(false)
     setUser(new UserSession())
   }
 
   return (
-    <BitcoinWalletContext.Provider value={{ user, connect, disconnect }}>
+    <BitcoinWalletContext.Provider value={{ user, connect, disconnect, connecting, disconnecting }}>
       {props.children}
     </BitcoinWalletContext.Provider>
   )
