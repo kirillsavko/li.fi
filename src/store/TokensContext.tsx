@@ -24,6 +24,14 @@ type Context = {
    * Indicates if Solana tokens are being fetched
    */
   fetchingSolanaTokens: boolean
+  /**
+   * List of all available Bitcoin tokens
+   */
+  bitcoinTokens: Token[]
+  /**
+   * Indicates if Bitcoin tokens are being fetched
+   */
+  fetchingBitcoinTokens: boolean
 }
 
 /**
@@ -40,6 +48,8 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
   const [fetchingEvmTokens, setFetchingEvmTokens] = useState(false)
   const [solanaTokens, setSolanaTokens] = useState<Token[]>([])
   const [fetchingSolanaTokens, setFetchingSolanaTokens] = useState(false)
+  const [bitcoinTokens, setBitcoinTokens] = useState<Token[]>([])
+  const [fetchingBitcoinTokens, setFetchingBitcoinTokens] = useState(false)
 
   const fetchEvmTokens = () => {
     setFetchingEvmTokens(true)
@@ -79,17 +89,38 @@ export const TokensProvider: FC<PropsWithChildren> = props => {
       .finally(() => setFetchingSolanaTokens(false))
   }
 
+  const fetchBitcoinTokens = () => {
+    setFetchingBitcoinTokens(true)
+    getTokens({
+      chainTypes: [ChainType.UTXO]
+    })
+      .then(tokens => {
+        const parsedTokens = parseTokensFromApi(tokens)
+        setBitcoinTokens(parsedTokens)
+      })
+      .catch(() => {
+        // Ideally, all errors from the API should be caught here and based on the response status
+        // code different error messages shown, but to save some time I won't do this. I believe
+        // it can be skipped so far for the test application, but for the production one it's
+        // really important and shouldn't be skipped
+        globalErrorsHook.addError('Unexpected error during fetching Bitcoin tokens. Please refresh the page')
+      })
+      .finally(() => setFetchingBitcoinTokens(false))
+  }
+
   /**
    * Gets all necessary data once during initialization to be accessible in the entire application
    */
   useEffect(() => {
     fetchEvmTokens()
     fetchSolanaTokens()
+    fetchBitcoinTokens()
   }, [])
 
   return (
     <TokensContext.Provider value={{
-      evmTokens, fetchingEvmTokens, solanaTokens, fetchingSolanaTokens,
+      evmTokens, fetchingEvmTokens, solanaTokens, fetchingSolanaTokens, bitcoinTokens,
+      fetchingBitcoinTokens,
     }}>
       {props.children}
     </TokensContext.Provider>

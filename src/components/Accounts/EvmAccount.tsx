@@ -1,6 +1,7 @@
 import { FC, Fragment, PropsWithChildren } from 'react'
 import { useAccount, useConnect, useDisconnect, useEnsName, WagmiProvider } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ChainType } from '@lifi/types'
 
 import { wagmiConfig } from '../../services/wagmi.ts'
 import { useTokens } from '../../store/TokensContext.tsx'
@@ -84,7 +85,7 @@ export const EvmAccount: FC<EvmAccountProps> = props => {
       <Tokens
         balances={balancesHook.evmBalances} fetchingBalances={balancesHook.fetchingEvmBalances}
         tokens={tokensHook.evmTokens} fetchingTokens={tokensHook.fetchingEvmTokens}
-        title='Tokens' address={address}
+        title='Tokens' address={address} type={ChainType.EVM}
       />
     </section>
   )

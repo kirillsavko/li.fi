@@ -1,15 +1,10 @@
-import {
-  ConnectionProvider, useWallet,
-  WalletProvider,
-} from '@solana/wallet-adapter-react';
+import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-adapter-react';
 import { clusterApiUrl, type PublicKey } from '@solana/web3.js';
 import { FC, PropsWithChildren } from 'react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
+import { ChainType } from '@lifi/types'
 
-import {
-  useWalletModal,
-  WalletModalProvider,
-} from '@solana/wallet-adapter-react-ui';
+import { useWalletModal, WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { useBalances } from '../../store/BalancesContext.tsx'
 import { useTokens } from '../../store/TokensContext.tsx'
 
@@ -103,7 +98,7 @@ export const SolanaAccount: FC<SolanaAccountProps> = props => {
       <Tokens
         balances={balancesHook.solanaBalances} fetchingBalances={balancesHook.fetchingSolanaBalances}
         tokens={tokensHook.solanaTokens} fetchingTokens={tokensHook.fetchingSolanaTokens}
-        title='Tokens' address={publicKey?.toString()}
+        title='Tokens' address={publicKey?.toString()} type={ChainType.SVM}
       />
     </section>
   );

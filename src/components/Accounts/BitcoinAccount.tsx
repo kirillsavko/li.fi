@@ -1,9 +1,13 @@
 import { FC } from 'react'
+import { ChainType } from '@lifi/types'
 
 import { useBitcoinWallet } from '../../store/BitcoinWalletContext.tsx'
+import { useBalances } from '../../store/BalancesContext.tsx'
+import { useTokens } from '../../store/TokensContext.tsx'
 
 import { Button } from '../Button/Button.tsx'
-import { AccountAddress, AccountRow } from './AccountBaseComponents/AccountBaseComponents.tsx'
+import { AccountAddress, AccountContainer, AccountRow } from './AccountBaseComponents/AccountBaseComponents.tsx'
+import { Tokens } from '../Tokens/Tokens.tsx'
 
 /**
  * Via this component the user can see connected bitcoin account and can disconnect it
@@ -49,11 +53,24 @@ type BitcoinAccountProps = {
  */
 export const BitcoinAccount: FC<BitcoinAccountProps> = props => {
   const bitcoinHook = useBitcoinWallet()
+  const balancesHook = useBalances()
+  const tokensHook = useTokens()
+
+  const address = bitcoinHook.user.isUserSignedIn()
+    ? bitcoinHook.user.loadUserData().profile.btcAddress.p2wpkh.mainnet
+    : undefined
 
   return (
     <section className={props.className || ''} data-testid='bitcoin-account'>
-      <h2>Bitcoin</h2>
-      {bitcoinHook.user.isUserSignedIn() ? <BitcoinAccountConnected /> : <ConnectBitcoinAccount />}
+      <AccountContainer>
+        <h2>Bitcoin</h2>
+        {bitcoinHook.user.isUserSignedIn() ? <BitcoinAccountConnected /> : <ConnectBitcoinAccount />}
+      </AccountContainer>
+      <Tokens
+        balances={balancesHook.bitcoinBalances} fetchingBalances={balancesHook.fetchingBitcoinBalances}
+        tokens={tokensHook.bitcoinTokens} fetchingTokens={tokensHook.fetchingBitcoinTokens}
+        title='Tokens' address={address} type={ChainType.UTXO}
+      />
     </section>
   );
 }
